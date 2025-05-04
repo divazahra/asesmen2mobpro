@@ -52,10 +52,8 @@ fun MainScreen() {
 
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello Android!",
-        modifier = modifier
-    )
+
+
 }
 
 @Preview(showBackground = true)
