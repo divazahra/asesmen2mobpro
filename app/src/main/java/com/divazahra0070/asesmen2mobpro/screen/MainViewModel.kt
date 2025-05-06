@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.divazahra0070.asesmen2mobpro.model.Film
 
 class MainViewModel : ViewModel() {
+
     val data = listOf(
         Film(
             1,
@@ -130,4 +131,7 @@ class MainViewModel : ViewModel() {
             "24 Februari 2017"
         )
     )
+    fun getFilm(id: Long): Film? {
+        return data.find { it.id == id }
+    }
 }
