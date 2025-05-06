@@ -1,0 +1,165 @@
+package com.divazahra0070.asesmen2mobpro.screen
+
+import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.divazahra0070.asesmen2mobpro.R
+import com.divazahra0070.asesmen2mobpro.ui.theme.Asesmen2MobproTheme
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailScreen() {
+    var judul by remember { mutableStateOf("") }
+    var review by remember { mutableStateOf("") }
+    var genre by remember { mutableStateOf("Action")}
+    var tanggal by remember { mutableStateOf("") }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                        Text(text = stringResource(id = R.string.tambah_film))
+                },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary
+                ),
+            )
+        }
+    ) { padding ->
+        FormFilm(
+            judul = judul,
+            onJudulChange = { judul = it},
+            review = review,
+            onReviewChange = { review = it},
+            selectedGenre = genre,
+            onGenreSelected = { genre = it },
+            tanggal = tanggal,
+            onTanggalChange = { tanggal = it},
+            modifier =  Modifier.padding(padding)
+        )
+    }
+}
+
+@Composable
+fun FormFilm(
+    judul: String, onJudulChange: (String) -> Unit,
+    review: String, onReviewChange: (String) -> Unit,
+    selectedGenre: String, onGenreSelected: (String) -> Unit,
+    tanggal: String, onTanggalChange: (String) -> Unit,
+    modifier: Modifier
+) {
+    val genreList = listOf("Action", "Comedy", "Fantasy", "Romance", "Horror")
+
+    Column(
+        modifier = modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        OutlinedTextField(
+            value = judul,
+            onValueChange = { onJudulChange(it) },
+            label = { Text(text = stringResource(R.string.judul))},
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words,
+                imeAction = ImeAction.Next
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
+        OutlinedTextField(
+            value = review,
+            onValueChange = { onReviewChange(it) },
+            label = { Text(text = stringResource(R.string.review)) },
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+            ),
+            modifier = Modifier.fillMaxWidth().height(150.dp)
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    BorderStroke(1.dp, Color.Gray),
+                    shape = RoundedCornerShape(4.dp)
+                )
+                .padding(16.dp)
+        ) {
+            Column {
+                Text(
+                    text = stringResource(R.string.genre),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                genreList.forEach { genre ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onGenreSelected(genre) }
+                            .padding(vertical = 4.dp)
+                    ) {
+                        RadioButton(
+                            selected = (genre == selectedGenre),
+                            onClick = { onGenreSelected(genre) }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = genre)
+                    }
+                }
+            }
+        }
+        OutlinedTextField(
+            value = tanggal,
+            onValueChange = { onTanggalChange(it) },
+            label = { Text(text = stringResource(R.string.tanggal))},
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words,
+                imeAction = ImeAction.Next
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Composable
+fun MainScreenPreview() {
+    Asesmen2MobproTheme {
+        DetailScreen()
+    }
+}

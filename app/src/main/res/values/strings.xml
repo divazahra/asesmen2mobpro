@@ -4,4 +4,8 @@
     <string name="x_diklik">%1$s diklik!</string>
     <string name="tambah_film">Tambah Film</string>
     <string name="belum_bisa">Belum bisa tambah film.</string>
+    <string name="judul">Judul</string>
+    <string name="review">Review Singkat</string>
+    <string name="genre">Genre</string>
+    <string name="tanggal">Tanggal Rilis</string>
 </resources>
