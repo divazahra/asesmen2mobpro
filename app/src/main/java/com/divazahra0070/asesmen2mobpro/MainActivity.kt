@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.divazahra0070.asesmen2mobpro.model.Film
+import com.divazahra0070.asesmen2mobpro.navigation.SetupNavGraph
 import com.divazahra0070.asesmen2mobpro.screen.MainViewModel
 import com.divazahra0070.asesmen2mobpro.ui.theme.Asesmen2MobproTheme
 
@@ -155,6 +156,6 @@ fun ListItem(film: Film, onClick: () -> Unit) {
 @Composable
 fun MainScreenPreview() {
     Asesmen2MobproTheme {
-        MainScreen()
+        SetupNavGraph()
     }
 }
