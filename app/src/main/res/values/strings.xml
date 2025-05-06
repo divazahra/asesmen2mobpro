@@ -11,4 +11,6 @@
     <string name="simpan">Simpan</string>
     <string name="edit_film">Ubah Film</string>
     <string name="invalid">Judul, review, genre, dan tanggal tidak boleh kosong.</string>
+    <string name="lainnya">Opsi lainnya</string>
+    <string name="hapus">Hapus catatan</string>
 </resources>
