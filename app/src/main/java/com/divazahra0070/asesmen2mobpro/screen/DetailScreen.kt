@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -43,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -66,8 +68,9 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
 
     var judul by remember { mutableStateOf("") }
     var review by remember { mutableStateOf("") }
-    var genre by remember { mutableStateOf("Action")}
+    var genre by remember { mutableStateOf("Action") }
     var tanggal by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (id == null) return@LaunchedEffect
@@ -121,8 +124,7 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                     }
                     if (id != null) {
                         DeleteAction {
-                            viewModel.delete(id)
-                            navController.popBackStack()
+                            showDialog = true
                         }
                     }
                 }
@@ -140,6 +142,15 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
             onTanggalChange = { tanggal = it},
             modifier =  Modifier.padding(padding)
         )
+
+        if (id != null && showDialog) {
+            DisplayAlertDialog(
+                onDismissRequest = { showDialog = false }) {
+                showDialog = false
+                viewModel.delete(id)
+                navController.popBackStack()
+            }
+        }
     }
 }
 
@@ -152,6 +163,7 @@ fun FormFilm(
     modifier: Modifier
 ) {
     val genreList = listOf("Action", "Comedy", "Fantasy", "Romance", "Horror")
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
@@ -174,6 +186,12 @@ fun FormFilm(
             label = { Text(text = stringResource(R.string.review)) },
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    focusManager.clearFocus()
+                }
             ),
             modifier = Modifier.fillMaxWidth().height(150.dp)
         )
@@ -216,7 +234,7 @@ fun FormFilm(
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Words,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Done
             ),
             modifier = Modifier.fillMaxWidth()
         )
