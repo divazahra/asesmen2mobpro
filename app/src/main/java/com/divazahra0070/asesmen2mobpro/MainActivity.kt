@@ -36,7 +36,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.divazahra0070.asesmen2mobpro.model.Film
+import com.divazahra0070.asesmen2mobpro.navigation.Screen
 import com.divazahra0070.asesmen2mobpro.navigation.SetupNavGraph
 import com.divazahra0070.asesmen2mobpro.screen.MainViewModel
 import com.divazahra0070.asesmen2mobpro.ui.theme.Asesmen2MobproTheme
@@ -47,7 +50,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Asesmen2MobproTheme {
-                MainScreen()
+                SetupNavGraph()
             }
         }
     }
@@ -55,8 +58,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-    val context = LocalContext.current
+fun MainScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {
@@ -73,7 +75,7 @@ fun MainScreen() {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    Toast.makeText(context, R.string.belum_bisa, Toast.LENGTH_SHORT).show()
+                    navController.navigate(Screen.FormBaru.route)
                 }
             ) {
                 Icon(
@@ -156,6 +158,6 @@ fun ListItem(film: Film, onClick: () -> Unit) {
 @Composable
 fun MainScreenPreview() {
     Asesmen2MobproTheme {
-        SetupNavGraph()
+        MainScreen(rememberNavController())
     }
 }
