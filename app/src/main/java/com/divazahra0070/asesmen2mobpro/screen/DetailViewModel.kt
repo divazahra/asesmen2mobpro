@@ -40,9 +40,9 @@ class DetailViewModel(private val dao: FilmDao) : ViewModel() {
         }
     }
 
-    fun delete(id: Long) {
+    fun softdelete(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            dao.deleteById(id)
+            dao.softDelete(id)
         }
     }
 }

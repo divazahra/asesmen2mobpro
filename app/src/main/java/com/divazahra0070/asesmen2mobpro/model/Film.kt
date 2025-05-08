@@ -10,5 +10,6 @@ data class Film (
     val judul: String,
     val review: String,
     val genre: String,
-    val tanggal: String
+    val tanggal: String,
+    val isDeleted: Boolean = false
 )

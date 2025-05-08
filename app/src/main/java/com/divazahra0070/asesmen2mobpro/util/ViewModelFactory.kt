@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.divazahra0070.asesmen2mobpro.database.FilmDb
 import com.divazahra0070.asesmen2mobpro.screen.DetailViewModel
 import com.divazahra0070.asesmen2mobpro.screen.MainViewModel
+import com.divazahra0070.asesmen2mobpro.screen.TrashViewModel
 
 class ViewModelFactory(
     private val context: Context
@@ -17,6 +18,8 @@ class ViewModelFactory(
             return MainViewModel(dao) as T
         } else if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             return DetailViewModel(dao) as T
+        } else if (modelClass.isAssignableFrom(TrashViewModel::class.java)) {
+            return TrashViewModel(dao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
