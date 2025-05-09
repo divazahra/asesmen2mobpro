@@ -19,8 +19,8 @@ abstract class FilmDb : RoomDatabase() {
         private var INSTANCE: FilmDb? = null
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL(
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
                     "ALTER TABLE film ADD COLUMN isDeleted INTEGER NOT NULL DEFAULT 0"
                 )
             }
