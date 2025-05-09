@@ -100,10 +100,9 @@ fun TrashContent(modifier: Modifier = Modifier) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     ListItem(
                         film = film,
-                        onClick = { /* kosongkan atau pakai jika perlu */ }
+                        onClick = {}
                     )
 
-                    // MoreVert di pojok kanan atas item
                     var expanded by remember { mutableStateOf(false) }
 
                     Box(
@@ -133,18 +132,14 @@ fun TrashContent(modifier: Modifier = Modifier) {
                                     viewModel.hapusPermanen(film.id)
                                 }
                             )
-
                         }
                     }
                 }
                 HorizontalDivider()
             }
-
         }
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
